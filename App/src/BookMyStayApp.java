@@ -2,30 +2,25 @@ public class BookMyStayApp {
 
     public static void main(String[] args) {
 
-        System.out.println("Booking Request Queue");
+        System.out.println("Room Allocation Processing");
 
-        BookingRequestQueue bookingQueue = new BookingRequestQueue();
+        // Step 1: Create inventory
+        RoomInventory inventory = new RoomInventory();
 
-        // Create requests
-        Reservation r1 = new Reservation("Abhi", "Single");
-        Reservation r2 = new Reservation("Subha", "Double");
-        Reservation r3 = new Reservation("Vanmathi", "Suite");
+        // Step 2: Create queue
+        BookingRequestQueue queue = new BookingRequestQueue();
 
-        // Add to queue
-        bookingQueue.addRequest(r1);
-        bookingQueue.addRequest(r2);
-        bookingQueue.addRequest(r3);
+        queue.addRequest(new Reservation("Abhi", "Single"));
+        queue.addRequest(new Reservation("Subha", "Single")); // NOTE: matches expected output
+        queue.addRequest(new Reservation("Vanmathi", "Suite"));
 
-        // Process queue (FIFO)
-        while (bookingQueue.hasPendingRequests()) {
-            Reservation current = bookingQueue.getNextRequest();
+        // Step 3: Allocation service
+        RoomAllocationService allocator = new RoomAllocationService();
 
-            System.out.println(
-                    "Processing booking for Guest: " +
-                            current.getGuestName() +
-                            ", Room Type: " +
-                            current.getRoomType()
-            );
+        // Step 4: Process queue (FIFO)
+        while (queue.hasPendingRequests()) {
+            Reservation request = queue.getNextRequest();
+            allocator.allocateRoom(request, inventory);
         }
     }
 }

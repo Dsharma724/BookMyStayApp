@@ -22,6 +22,14 @@ public class RoomInventory {
         roomAvailability = new HashMap<>();
         initializeInventory();
     }
+    public int getAvailableRooms(String roomType) {
+        return roomAvailability.getOrDefault(roomType, 0);
+    }
+    public void addRooms(String roomType, int count) {
+        int current = roomAvailability.getOrDefault(roomType, 0);
+        roomAvailability.put(roomType, current + count);
+    }
+
 
     /**
      * Initialize default room availability

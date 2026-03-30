@@ -8,6 +8,9 @@ public class BookingRequestQueue {
     public BookingRequestQueue() {
         requestQueue = new LinkedList<>();
     }
+   public boolean isEmpty() {
+        return requestQueue.isEmpty();   //
+    }
 
     public void addRequest(Reservation reservation) {
         requestQueue.offer(reservation);
